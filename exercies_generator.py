@@ -8,20 +8,28 @@ MAX_NUM = 100
 operators = ["+","-","*","/"]
 
 def ex_gen():
-    exercise = str(random.randint(MIN_NUM,MAX_NUM))
+    number = random.randint(MIN_NUM,MAX_NUM)
+    exercise = str(number)
     N = random.randint(MIN_NUM_OPERATORS,MAX_NUM_OPERATORS)
     for i in range(N):
         sign = random.choice(operators)
         if sign == "/":
-            divisors = find_divisors
-            exercise = exercise + "/" + str(random.choice(divisors))
+            divisors = find_divisors(number)
+            number = random.choice(divisors)
+            exercise = exercise + "/" + str(number)
         else:
-            exercise = exercise + sign + str(random.randint(MIN_NUM,MAX_NUM))
+            number = random.randint(MIN_NUM,MAX_NUM)
+            exercise = exercise + sign + str(number)
+    return exercise
         
         
 def find_divisors(num):
     divisors = [num]
-    for i in range(1,num/2):
+    for i in range(1,num):
         if num%i == 0:
             divisors.append(i)
+    random.shuffle(divisors)
+    if len(divisors)>2:
+        divisors.remove(1)
+        divisors.remove(num)
     return divisors
